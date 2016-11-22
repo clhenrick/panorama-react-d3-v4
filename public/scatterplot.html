@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>React D3 Test</title>
+  </head>
+  <body>
+    <h3>Scatterplot</h3>
+    <!-- d3 v4 -->
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script>
+      var margin = {
+        top: 20,
+        bottom: 20,
+        left: 50,
+        right: 20
+      };
+
+      var width = 960 - margin.left - margin.right;
+      var height = 500 - margin.top - margin.bottom;
+
+      var x = d3.scaleLinear().range([0, width]);
+      var y = d3.scaleLinear().range([height, 0]);
+
+      var svg = d3.select('body').append('svg')
+          .attr('width', width + margin.left + margin.right)
+          .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+      var dispatch = d3.dispatch('mouseOver', 'mouseOut');
+
+      dispatch.on('mouseOver', function(d) {
+        console.log('the data is: ', d);
+      });
+
+      dispatch.call('mouseOver'); // undefined
+
+      d3.json('data/scatter-series.json', function(err, rsp) {
+        if (err) throw new Error(err);
+
+        // Add a random value to each row to scale the dot's by
+        var data = rsp.series[0].data.map((row) => {
+          row.push(Math.floor(Math.random() * 100) + 1);
+          return row;
+        });
+
+        x.domain(d3.extent(data, function(d) { return d[0]; }));
+        y.domain(d3.extent(data, function(d) { return d[1]; }));
+
+        svg.selectAll('.dot')
+          .data(data)
+          .enter().append('circle')
+          .attr('r', 5)
+          .attr('cx', function(d) { return x(d[0]); })
+          .attr('cy', function(d) { return y(d[1]); })
+          .style('fill', function(d) { return 'hsla(0,50%,50%,0.8)'; })
+          .on('mouseover', function() {
+            // couldn't just pass dispatch.mouseOver as a callback; this way must be a v4 update?
+            dispatch.apply('mouseOver', this, arguments);
+          });
+
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+        svg.append("g")
+            .call(d3.axisLeft(y));
+      });
+    </script>
+  </body>
+</html>
