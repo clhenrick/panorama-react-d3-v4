@@ -61,12 +61,17 @@
             dispatch.apply('mouseOver', this, arguments);
           });
 
+          // TO DO: scale dot size based on d[2] value
+
         svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x));
 
         svg.append("g")
             .call(d3.axisLeft(y));
+
+        // TO DO: add labels for axises
+        
       });
     </script>
   </body>

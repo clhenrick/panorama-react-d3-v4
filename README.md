@@ -1,7 +1,9 @@
-# D3 React Test
+# Panorama React D3 v4
+Migrating & refactoring a few components from Stamen's [American Panorama](https://github.com/stamen/panorama) to D3 v4, keeping re-usability in mind.
 
-Building off modular D3 React components from [American Panorama](https://github.com/americanpanorama/panorama).
+See `./public` for vanilla d3 v4 examples of each component.
 
+Much of the code / architecture in `./src` originally written / implemented by Eric Socolofsky & Sean Conelley of Stamen Design.
 
 ## Create React App
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
