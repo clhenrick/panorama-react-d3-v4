@@ -1,3 +1,9 @@
+# D3 React Test
+
+Building off modular D3 React components from [American Panorama](https://github.com/americanpanorama/panorama).
+
+
+## Create React App
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
